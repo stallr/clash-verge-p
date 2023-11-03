@@ -17,7 +17,7 @@ const SIDECAR_HOST = execSync("rustc -vV")
 /* ======= clash ======= */
 const CLASH_STORAGE_PREFIX = "https://release.dreamacro.workers.dev/";
 const CLASH_URL_PREFIX =
-  "https://github.com/Dreamacro/clash/releases/download/premium/";
+  "https://github.com/stallr/clash-backup/releases/download/latest/";
 const CLASH_LATEST_DATE = "latest";
 
 const CLASH_MAP = {
@@ -300,7 +300,7 @@ const resolveGeoIP = () =>
   });
 
 const tasks = [
-  { name: "clash", func: () => resolveSidecar(clashS3()), retry: 5 },
+  { name: "clash", func: () => resolveSidecar(clash()), retry: 5 },
   { name: "clash-meta", func: () => resolveSidecar(clashMeta()), retry: 5 },
   { name: "wintun", func: resolveWintun, retry: 5, winOnly: true },
   { name: "service", func: resolveService, retry: 5, winOnly: true },
