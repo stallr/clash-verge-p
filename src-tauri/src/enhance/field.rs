@@ -13,7 +13,8 @@ pub const HANDLE_FIELDS: [&str; 9] = [
     "external-controller",
 ];
 
-pub const DEFAULT_FIELDS: [&str; 5] = [
+pub const DEFAULT_FIELDS: [&str; 6] = [
+    "script",
     "proxies",
     "proxy-groups",
     "proxy-providers",
@@ -21,12 +22,11 @@ pub const DEFAULT_FIELDS: [&str; 5] = [
     "rule-providers",
 ];
 
-pub const OTHERS_FIELDS: [&str; 30] = [
+pub const OTHERS_FIELDS: [&str; 29] = [
     "dns",
     "tun",
     "ebpf",
     "hosts",
-    "script",
     "profile",
     "payload",
     "tunnels",

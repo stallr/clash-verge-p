@@ -11,6 +11,7 @@ export const HANDLE_FIELDS = [
 ];
 
 export const DEFAULT_FIELDS = [
+  "script",
   "proxies",
   "proxy-groups",
   "proxy-providers",
@@ -23,7 +24,6 @@ export const OTHERS_FIELDS = [
   "tun",
   "ebpf",
   "hosts",
-  "script",
   "profile",
   "payload",
   "tunnels",

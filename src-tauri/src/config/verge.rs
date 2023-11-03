@@ -126,8 +126,8 @@ impl IVerge {
                 true => Some("clash-meta".into()),
             },
             language: match cfg!(feature = "default-meta") {
-                false => Some("en".into()),
-                true => Some("zh".into()),
+                false => Some("zh".into()),
+                true => Some("en".into()),
             },
             theme_mode: Some("system".into()),
             theme_blur: Some(false),
