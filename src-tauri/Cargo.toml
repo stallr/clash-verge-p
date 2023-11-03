@@ -2,9 +2,9 @@
 name = "clash-verge"
 version = "0.1.0"
 description = "clash verge"
-authors = ["zzzgydi"]
+authors = ["stallr"]
 license = "GPL-3.0"
-repository = "https://github.com/zzzgydi/clash-verge.git"
+repository = "https://github.com/stallr/clash-verge-p.git"
 default-run = "clash-verge"
 edition = "2021"
 build = "build.rs"

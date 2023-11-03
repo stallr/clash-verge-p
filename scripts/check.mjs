@@ -266,7 +266,7 @@ async function downloadFile(url, path) {
  * main
  */
 const SERVICE_URL =
-  "https://github.com/zzzgydi/clash-verge-service/releases/download/latest";
+  "https://github.com/stallr/clash-verge-service/releases/download/latest";
 
 const resolveService = () =>
   resolveResource({

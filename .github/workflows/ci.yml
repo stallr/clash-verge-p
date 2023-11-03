@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
-    if: startsWith(github.repository, 'zzzgydi')
+    if: startsWith(github.repository, 'stallr')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     if: |
-      startsWith(github.repository, 'zzzgydi') &&
+      startsWith(github.repository, 'stallr') &&
       startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Checkout repository
