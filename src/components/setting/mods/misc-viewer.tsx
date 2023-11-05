@@ -38,7 +38,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
         enableBuiltinEnhanced: verge?.enable_builtin_enhanced ?? true,
         proxyLayoutColumn: verge?.proxy_layout_column || 6,
         defaultLatencyTest: verge?.default_latency_test || "",
-        autoLogClean: verge?.auto_log_clean || 1,
+        autoLogClean: verge?.auto_log_clean || 0,
       });
     },
     close: () => setOpen(false),
