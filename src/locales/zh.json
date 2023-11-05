@@ -82,7 +82,7 @@
   "System Proxy Setting": "系统代理设置",
   "Proxy Guard": "系统代理守卫",
   "Guard Duration": "代理守卫间隔",
-  "Proxy Bypass": "Proxy Bypass",
+  "Proxy Bypass": "绕过的IP/域名(';'号分隔)",
   "Current System Proxy": "当前系统代理",
   "Theme Mode": "主题模式",
   "Theme Blur": "背景模糊",

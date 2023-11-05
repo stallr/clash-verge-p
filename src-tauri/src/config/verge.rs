@@ -137,7 +137,7 @@ impl IVerge {
             enable_silent_start: Some(false),
             enable_system_proxy: Some(false),
             enable_proxy_guard: Some(true),
-            proxy_guard_duration: Some(20),
+            proxy_guard_duration: Some(15),
             auto_close_connection: Some(true),
             enable_builtin_enhanced: Some(true),
             enable_clash_fields: Some(true),
