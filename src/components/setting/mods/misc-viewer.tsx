@@ -25,7 +25,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
     enableBuiltinEnhanced: true,
     proxyLayoutColumn: 6,
     defaultLatencyTest: "",
-    autoLogClean: 1,
+    autoLogClean: 0,
   });
 
   useImperativeHandle(ref, () => ({
@@ -165,6 +165,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
             }}
           >
             {[
+              { key: "Never Clean", value: 0 },
               { key: "Retain 7 Days", value: 1 },
               { key: "Retain 30 Days", value: 2 },
               { key: "Retain 90 Days", value: 3 },

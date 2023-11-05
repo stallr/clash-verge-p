@@ -80,14 +80,14 @@ pub fn delete_log() -> Result<()> {
     let auto_log_clean = {
         let verge = Config::verge();
         let verge = verge.data();
-        verge.auto_log_clean.clone().unwrap_or(0)
+        verge.auto_log_clean.clone().unwrap_or(1)
     };
 
     let day = match auto_log_clean {
         1 => 7,
         2 => 30,
         3 => 90,
-        _ => 7,
+        _ => return Ok(()),
     };
 
     log::debug!(target: "app", "try to delete log files, day: {day}");
