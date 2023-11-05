@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_yaml::Mapping;
 use std::fs;
 use sysproxy::Sysproxy;
-
+use sysinfo::{System, SystemExt};
 use super::Config;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -188,7 +188,6 @@ impl PrfItem {
         let opt_ref = option.as_ref();
         let with_proxy = opt_ref.map_or(false, |o| o.with_proxy.unwrap_or(false));
         let self_proxy = opt_ref.map_or(false, |o| o.self_proxy.unwrap_or(false));
-        let user_agent = opt_ref.map_or(None, |o| o.user_agent.clone());
 
         let mut builder = reqwest::ClientBuilder::new().use_rustls_tls().no_proxy();
 
@@ -227,10 +226,14 @@ impl PrfItem {
                 _ => {}
             };
         }
-
+        let mut system = System::new_all();
+        system.refresh_all();
+        let os_name = system.name().unwrap_or_else(|| "unknown".to_string());
+        let os_version = system.os_version().unwrap_or_else(|| "unknown".to_string());
+    
         let version = unsafe { dirs::APP_VERSION };
-        let version = format!("clash-verge/{version}");
-        builder = builder.user_agent(user_agent.unwrap_or(version));
+        let version = format!("clash-verge_{version}/{os_name} {os_version}");
+        builder = builder.user_agent(version);
 
         let resp = builder.build()?.get(url).send().await?;
 

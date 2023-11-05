@@ -2,7 +2,7 @@ import { IconButton, Paper } from "@mui/material";
 import { useLockFn } from "ahooks";
 import { useTranslation } from "react-i18next";
 import { BasePage, Notice } from "@/components/base";
-import { GitHub } from "@mui/icons-material";
+import { Google } from "@mui/icons-material";
 import { openWebUrl } from "@/services/cmds";
 import SettingVerge from "@/components/setting/setting-verge";
 import SettingClash from "@/components/setting/setting-clash";
@@ -15,7 +15,7 @@ const SettingPage = () => {
     Notice.error(err?.message || err.toString());
   };
 
-  const toGithubRepo = useLockFn(() => {
+  const toGoogleRepo = useLockFn(() => {
     return openWebUrl("https://www.google.com/");
   });
 
@@ -27,9 +27,9 @@ const SettingPage = () => {
           size="small"
           color="inherit"
           title=""
-          onClick={toGithubRepo}
+          onClick={toGoogleRepo}
         >
-          <GitHub fontSize="inherit" />
+          <Google fontSize="inherit" />
         </IconButton>
       }
     >

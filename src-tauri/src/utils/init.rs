@@ -87,7 +87,7 @@ pub fn delete_log() -> Result<()> {
         1 => 7,
         2 => 30,
         3 => 90,
-        _ => return Ok(()),
+        _ => 7,
     };
 
     log::debug!(target: "app", "try to delete log files, day: {day}");

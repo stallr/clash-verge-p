@@ -25,7 +25,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
     enableBuiltinEnhanced: true,
     proxyLayoutColumn: 6,
     defaultLatencyTest: "",
-    autoLogClean: 0,
+    autoLogClean: 1,
   });
 
   useImperativeHandle(ref, () => ({
@@ -38,7 +38,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
         enableBuiltinEnhanced: verge?.enable_builtin_enhanced ?? true,
         proxyLayoutColumn: verge?.proxy_layout_column || 6,
         defaultLatencyTest: verge?.default_latency_test || "",
-        autoLogClean: verge?.auto_log_clean || 0,
+        autoLogClean: verge?.auto_log_clean || 1,
       });
     },
     close: () => setOpen(false),
@@ -165,7 +165,6 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
             }}
           >
             {[
-              { key: "Never Clean", value: 0 },
               { key: "Retain 7 Days", value: 1 },
               { key: "Retain 30 Days", value: 2 },
               { key: "Retain 90 Days", value: 3 },

@@ -286,7 +286,7 @@ const resolveUninstall = () =>
 const resolveMmdb = () =>
   resolveResource({
     file: "Country.mmdb",
-    downloadURL: `https://github.com/Dreamacro/maxmind-geoip/releases/download/20231012/Country.mmdb`,
+    downloadURL: `https://github.com/stallr/maxmind-geoip/raw/release/Country.mmdb`,
   });
 const resolveGeosite = () =>
   resolveResource({

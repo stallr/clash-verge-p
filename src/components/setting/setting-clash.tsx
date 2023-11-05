@@ -112,7 +112,7 @@ const SettingClash = ({ onError }: Props) => {
         />
       </SettingItem>
 
-      <SettingItem label={t("External")}>
+      {/* <SettingItem label={t("External")}>
         <IconButton
           color="inherit"
           size="small"
@@ -132,9 +132,9 @@ const SettingClash = ({ onError }: Props) => {
         >
           <ArrowForward />
         </IconButton>
-      </SettingItem>
+      </SettingItem> */}
 
-      <SettingItem label={t("Clash Field")}>
+      {/* <SettingItem label={t("Clash Field")}>
         <IconButton
           color="inherit"
           size="small"
@@ -143,7 +143,7 @@ const SettingClash = ({ onError }: Props) => {
         >
           <ArrowForward />
         </IconButton>
-      </SettingItem>
+      </SettingItem> */}
 
       <SettingItem
         label={t("Clash Core")}

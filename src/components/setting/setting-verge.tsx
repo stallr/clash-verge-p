@@ -135,7 +135,7 @@ const SettingVerge = ({ onError }: Props) => {
         </IconButton>
       </SettingItem>
 
-      <SettingItem label={t("Runtime Config")}>
+      {/* <SettingItem label={t("Runtime Config")}>
         <IconButton
           color="inherit"
           size="small"
@@ -144,7 +144,7 @@ const SettingVerge = ({ onError }: Props) => {
         >
           <ArrowForward />
         </IconButton>
-      </SettingItem>
+      </SettingItem> */}
 
       <SettingItem label={t("Open App Dir")}>
         <IconButton
