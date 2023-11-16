@@ -54,6 +54,7 @@ jobs:
             *.msi
             *.sig
             *.exe
+            *.json
 
       - name: Install Dependencies (ubuntu only)
         if: startsWith(matrix.os, 'ubuntu-')
