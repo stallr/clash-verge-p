@@ -7,10 +7,72 @@ use crate::{
 use crate::{ret_err, wrap_err};
 use anyhow::{Context, Result};
 use serde_yaml::Mapping;
-use std::collections::{HashMap, VecDeque};
+use std::{collections::{HashMap, VecDeque}, env, process::Command};
+use std::path::{Path, PathBuf};
 use sysproxy::Sysproxy;
 
+
 type CmdResult<T = ()> = Result<T, String>;
+
+#[tauri::command]
+pub fn check_if_installed_in_applications() -> Result<bool, String> {
+    let current_exe = env::current_exe().map_err(|e| e.to_string())?;
+    let app_bundle_path = current_exe
+        .ancestors()
+        .find(|path| path.extension().and_then(|ext| ext.to_str()) == Some("app"))
+        .ok_or("Not running from an .app bundle.")?;
+
+    // 检查程序是否已安装在 /Applications
+    if app_bundle_path.starts_with("/Applications/") {
+        Ok(true) // 已安装在 /Applications
+    } else {
+        Ok(false) // 未安装在 /Applications
+    }
+}
+
+fn escape_for_apple_script(path: &Path) -> Result<String, String> {
+    path.to_str()
+        .map(|s| s.replace("\"", "\\\""))
+        .ok_or_else(|| "Failed to convert path to string.".to_string())
+}
+
+#[tauri::command]
+pub fn move_to_applications() -> Result<bool, String> {
+    let current_exe = env::current_exe().map_err(|e| e.to_string())?;
+    let app_bundle_path = current_exe
+        .ancestors()
+        .find(|path| path.extension().and_then(|ext| ext.to_str()) == Some("app"))
+        .ok_or("Not running from an .app bundle.")?;
+
+    let app_bundle_path_str = escape_for_apple_script(&app_bundle_path)?;
+    let app_name = app_bundle_path.file_name().ok_or("Failed to get app bundle name")?.to_str().ok_or("Failed to convert app bundle name to string")?;
+    let target_path = format!("/Applications/{}", app_name);
+
+    let apple_script_command = if PathBuf::from(&target_path).exists() {
+        format!(
+            "do shell script \"rm -R '{}' && cp -R '{}' '{}' && rm -R '{}'\" with administrator privileges",
+            target_path, app_bundle_path_str, target_path, app_bundle_path_str
+        )
+    } else {
+        format!(
+            "do shell script \"cp -R '{}' '{}' && rm -R '{}'\" with administrator privileges",
+            app_bundle_path_str, target_path, app_bundle_path_str
+        )
+    };
+
+
+    let output = Command::new("osascript")
+        .arg("-e")
+        .arg(apple_script_command)
+        .output()
+        .map_err(|e| e.to_string())?;
+
+    if output.status.success() {
+        Ok(true)
+    } else {
+        Err(String::from_utf8_lossy(&output.stderr).to_string())
+    }
+}
 
 #[tauri::command]
 pub fn get_profiles() -> CmdResult<IProfiles> {

@@ -140,7 +140,10 @@ export const getProxies = async () => {
 
   const _global: IProxyGroupItem = {
     ...global,
-    all: global?.all?.map((item) => generateItem(item)) || [],
+    all:
+      global?.all
+        ?.filter((name) => name !== "DIRECT" && name !== "REJECT")
+        .map((item) => generateItem(item)) || [],
   };
 
   return { global: _global, direct, groups, records: proxyRecord, proxies };

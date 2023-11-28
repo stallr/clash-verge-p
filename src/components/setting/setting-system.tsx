@@ -2,10 +2,12 @@ import useSWR from "swr";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { IconButton, Switch } from "@mui/material";
+import { Lock } from "@mui/icons-material";
 import { ArrowForward, PrivacyTipRounded, Settings } from "@mui/icons-material";
-import { checkService } from "@/services/cmds";
+import { checkService, grantPermission, restartSidecar } from "@/services/cmds";
 import { useVerge } from "@/hooks/use-verge";
-import { DialogRef } from "@/components/base";
+import { useLockFn } from "ahooks";
+import { DialogRef, Notice } from "@/components/base";
 import { SettingList, SettingItem } from "./mods/setting-comp";
 import { GuardState } from "./mods/guard-state";
 import { ServiceViewer } from "./mods/service-viewer";
@@ -34,6 +36,18 @@ const SettingSystem = ({ onError }: Props) => {
     }
   );
 
+  const OS = getSystem();
+  const { clash_core = "clash" } = verge ?? {};
+  const onGrant = useLockFn(async (core: string) => {
+    try {
+      await grantPermission(core);
+      // 自动重启
+      if (core === clash_core) await restartSidecar();
+      Notice.success(`Successfully grant permission to ${core}`, 1000);
+    } catch (err: any) {
+      Notice.error(err?.message || err.toString());
+    }
+  });
   const serviceRef = useRef<DialogRef>(null);
   const sysproxyRef = useRef<DialogRef>(null);
 
@@ -58,6 +72,20 @@ const SettingSystem = ({ onError }: Props) => {
       )}
 
       <SettingItem label={t("Tun Mode")}>
+        {(OS === "macos" || OS === "linux") && (
+          <IconButton
+            color="inherit"
+            size="small"
+            edge="start"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onGrant(clash_core);
+            }}
+          >
+            <Lock fontSize="inherit" />
+          </IconButton>
+        )}
         <GuardState
           value={enable_tun_mode ?? false}
           valueProps="checked"

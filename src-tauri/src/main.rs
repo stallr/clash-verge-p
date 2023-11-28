@@ -28,6 +28,8 @@ fn main() -> std::io::Result<()> {
         .setup(|app| Ok(resolve::resolve_setup(app)))
         .on_system_tray_event(core::tray::Tray::on_system_tray_event)
         .invoke_handler(tauri::generate_handler![
+            cmds::check_if_installed_in_applications,
+            cmds::move_to_applications,
             // common
             cmds::get_sys_proxy,
             cmds::open_app_dir,
