@@ -17,6 +17,7 @@ import { BrowserRouter } from "react-router-dom";
 import { BaseErrorBoundary } from "./components/base";
 import Layout from "./pages/_layout";
 import "./services/i18n";
+import getSystem from "@/utils/get-system";
 
 const mainElementId = "root";
 const container = document.getElementById(mainElementId);
@@ -53,7 +54,7 @@ const Main = () => {
 
   return (
     <React.StrictMode>
-      {showModal && (
+      {getSystem() === "macos" && showModal && (
         <InstallationCheckModal
           onMoveToApplications={handleMoveToApplications}
         />

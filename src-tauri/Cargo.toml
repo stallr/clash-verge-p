@@ -13,6 +13,7 @@ build = "build.rs"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
+nix = "0.27.1"
 warp = "0.3"
 which = "4.2.2"
 anyhow = "1.0"

@@ -48,6 +48,16 @@ const SettingSystem = ({ onError }: Props) => {
       Notice.error(err?.message || err.toString());
     }
   });
+  const onGuard = async (e: boolean) => {
+    try {
+      await grantPermission(clash_core);
+    } catch (err: any) {
+      Notice.error(err?.message || err.toString());
+      return false;
+    }
+    await restartSidecar();
+    return true;
+  };
   const serviceRef = useRef<DialogRef>(null);
   const sysproxyRef = useRef<DialogRef>(null);
 
@@ -72,7 +82,7 @@ const SettingSystem = ({ onError }: Props) => {
       )}
 
       <SettingItem label={t("Tun Mode")}>
-        {(OS === "macos" || OS === "linux") && (
+        {OS === "linux" && (
           <IconButton
             color="inherit"
             size="small"
@@ -91,8 +101,12 @@ const SettingSystem = ({ onError }: Props) => {
           valueProps="checked"
           onCatch={onError}
           onFormat={onSwitchFormat}
-          onChange={(e) => onChangeData({ enable_tun_mode: e })}
-          onGuard={(e) => patchVerge({ enable_tun_mode: e })}
+          onChange={async (e) => {
+            if (e === false || (await onGuard(e))) {
+              patchVerge({ enable_tun_mode: e });
+              onChangeData({ enable_tun_mode: e });
+            }
+          }}
         >
           <Switch edge="end" />
         </GuardState>
