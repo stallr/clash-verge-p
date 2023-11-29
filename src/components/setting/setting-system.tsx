@@ -49,13 +49,15 @@ const SettingSystem = ({ onError }: Props) => {
     }
   });
   const onGuard = async (e: boolean) => {
-    try {
-      await grantPermission(clash_core);
-    } catch (err: any) {
-      Notice.error(err?.message || err.toString());
-      return false;
+    if (OS === "macos" || OS === "linux") {
+      try {
+        await grantPermission(clash_core);
+      } catch (err: any) {
+        Notice.error(err?.message || err.toString());
+        return false;
+      }
+      await restartSidecar();
     }
-    await restartSidecar();
     return true;
   };
   const serviceRef = useRef<DialogRef>(null);
