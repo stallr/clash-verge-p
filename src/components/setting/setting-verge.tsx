@@ -17,6 +17,9 @@ import { GuardState } from "./mods/guard-state";
 import { LayoutViewer } from "./mods/layout-viewer";
 import { UpdateViewer } from "./mods/update-viewer";
 import getSystem from "@/utils/get-system";
+import { invoke_uwp_tool } from "@/services/cmds";
+
+const isWIN = getSystem() === "windows";
 
 interface Props {
   onError?: (err: Error) => void;
@@ -150,6 +153,19 @@ const SettingVerge = ({ onError }: Props) => {
           <ArrowForward />
         </IconButton>
       </SettingItem>
+
+      {isWIN && (
+        <SettingItem label={t("Open UWP tool")}>
+          <IconButton
+            color="inherit"
+            size="small"
+            sx={{ my: "2px" }}
+            onClick={invoke_uwp_tool}
+          >
+            <ArrowForward />
+          </IconButton>
+        </SettingItem>
+      )}
 
       {/* <SettingItem label={t("Runtime Config")}>
         <IconButton

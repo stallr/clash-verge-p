@@ -68,7 +68,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
     <BaseDialog
       open={open}
       title={t("Miscellaneous")}
-      contentSx={{ width: 450 }}
+      contentSx={{ width: 420 }}
       okBtn={t("Save")}
       cancelBtn={t("Cancel")}
       onClose={() => setOpen(false)}
@@ -76,7 +76,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("App Log Level")} />
           <Select
             size="small"
@@ -97,7 +97,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </Select>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Auto Close Connections")} />
           <Switch
             edge="end"
@@ -108,7 +108,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Enable Clash Fields Filter")} />
           <Switch
             edge="end"
@@ -119,7 +119,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Enable Builtin Enhanced")} />
           <Switch
             edge="end"
@@ -130,7 +130,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Proxy Layout Column")} />
           <Select
             size="small"
@@ -154,7 +154,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </Select>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Auto Log Clean")} />
           <Select
             size="small"
@@ -180,7 +180,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </Select>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Default Latency Test")} />
           <TextField
             size="small"
@@ -197,7 +197,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Open App Dir")} />
           <IconButton
             color="inherit"
@@ -209,7 +209,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </IconButton>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Open Core Dir")} />
           <IconButton
             color="inherit"
@@ -221,7 +221,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </IconButton>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "4px 2px" }}>
           <ListItemText primary={t("Open Logs Dir")} />
           <IconButton
             color="inherit"

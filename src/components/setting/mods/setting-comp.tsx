@@ -27,7 +27,7 @@ export const SettingItem: React.FC<ItemProps> = (props) => {
   );
 
   return (
-    <ListItem sx={{ pt: "5px", pb: "5px" }}>
+    <ListItem sx={{ pt: "3px", pb: "3px" }}>
       <ListItemText primary={primary} secondary={secondary} />
       {children}
     </ListItem>
