@@ -90,7 +90,7 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "0px 2px" }}>
           <ListItemText primary={t("Proxy Guard")} />
           <Switch
             edge="end"
@@ -106,7 +106,7 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
             disabled={!enabled}
             size="small"
             value={value.duration}
-            sx={{ width: 100 }}
+            sx={{ width: 100, input: { py: "6px", cursor: "pointer" } }}
             InputProps={{
               endAdornment: <InputAdornment position="end">s</InputAdornment>,
             }}
@@ -137,8 +137,8 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
         </ListItem>
       </List>
 
-      <Box sx={{ mt: 2.5 }}>
-        <Typography variant="body1" sx={{ fontSize: "18px", mb: 1 }}>
+      <Box sx={{ mt: 1 }}>
+        <Typography variant="body1" sx={{ fontSize: "18px", mb: 0 }}>
           {t("Current System Proxy")}
         </Typography>
 

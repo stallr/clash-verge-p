@@ -70,7 +70,7 @@ const SettingVerge = ({ onError }: Props) => {
           onChange={(e) => onChangeData({ language: e })}
           onGuard={(e) => patchVerge({ language: e })}
         >
-          <Select size="small" sx={{ width: 100, "> div": { py: "7px" } }}>
+          <Select size="small" sx={{ width: 100, "> div": { py: "6px" } }}>
             <MenuItem value="zh">中文</MenuItem>
             <MenuItem value="en">English</MenuItem>
             <MenuItem value="ru">Русский</MenuItem>
@@ -98,7 +98,7 @@ const SettingVerge = ({ onError }: Props) => {
             onChange={(e) => onChangeData({ tray_event: e })}
             onGuard={(e) => patchVerge({ tray_event: e })}
           >
-            <Select size="small" sx={{ width: 130, "> div": { py: "7px" } }}>
+            <Select size="small" sx={{ width: 130, "> div": { py: "6px" } }}>
               <MenuItem value="main_window">{t("Show Main Window")}</MenuItem>
               <MenuItem value="system_proxy">{t("System Proxy")}</MenuItem>
               <MenuItem value="tun_mode">{t("Tun Mode")}</MenuItem>
@@ -176,7 +176,7 @@ const SettingVerge = ({ onError }: Props) => {
       )}
 
       <SettingItem label={t("Verge Version")}>
-        <Typography sx={{ py: "7px", pr: 1 }}>v{version}</Typography>
+        <Typography sx={{ py: "6px", pr: 1 }}>v{version}</Typography>
       </SettingItem>
     </SettingList>
   );

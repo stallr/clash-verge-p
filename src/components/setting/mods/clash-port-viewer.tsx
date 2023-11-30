@@ -47,12 +47,12 @@ export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: "1px" }}>
           <ListItemText primary="Mixed Port" />
           <TextField
             size="small"
             autoComplete="off"
-            sx={{ width: 135 }}
+            sx={{ width: 80 }}
             value={port}
             onChange={(e) =>
               setPort(+e.target.value?.replace(/\D+/, "").slice(0, 5))
