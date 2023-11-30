@@ -2,6 +2,7 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { useLockFn } from "ahooks";
 import { useTranslation } from "react-i18next";
 import {
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -12,6 +13,8 @@ import {
 } from "@mui/material";
 import { useVerge } from "@/hooks/use-verge";
 import { BaseDialog, DialogRef, Notice } from "@/components/base";
+import { openAppDir, openCoreDir, openLogsDir } from "@/services/cmds";
+import { ArrowForward } from "@mui/icons-material";
 
 export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -77,7 +80,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           <ListItemText primary={t("App Log Level")} />
           <Select
             size="small"
-            sx={{ width: 100, "> div": { py: "7.5px" } }}
+            sx={{ width: 100, "> div": { py: "7px" } }}
             value={values.appLogLevel}
             onChange={(e) => {
               setValues((v) => ({
@@ -131,7 +134,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           <ListItemText primary={t("Proxy Layout Column")} />
           <Select
             size="small"
-            sx={{ width: 135, "> div": { py: "7.5px" } }}
+            sx={{ width: 135, "> div": { py: "7px" } }}
             value={values.proxyLayoutColumn}
             onChange={(e) => {
               setValues((v) => ({
@@ -155,7 +158,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           <ListItemText primary={t("Auto Log Clean")} />
           <Select
             size="small"
-            sx={{ width: 135, "> div": { py: "7.5px" } }}
+            sx={{ width: 135, "> div": { py: "7px" } }}
             value={values.autoLogClean}
             onChange={(e) => {
               setValues((v) => ({
@@ -192,6 +195,42 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
               setValues((v) => ({ ...v, defaultLatencyTest: e.target.value }))
             }
           />
+        </ListItem>
+
+        <ListItem sx={{ padding: "5px 2px" }}>
+          <ListItemText primary={t("Open App Dir")} />
+          <IconButton
+            color="inherit"
+            size="small"
+            sx={{ my: "2px" }}
+            onClick={openAppDir}
+          >
+            <ArrowForward />
+          </IconButton>
+        </ListItem>
+
+        <ListItem sx={{ padding: "5px 2px" }}>
+          <ListItemText primary={t("Open Core Dir")} />
+          <IconButton
+            color="inherit"
+            size="small"
+            sx={{ my: "2px" }}
+            onClick={openCoreDir}
+          >
+            <ArrowForward />
+          </IconButton>
+        </ListItem>
+
+        <ListItem sx={{ padding: "5px 2px" }}>
+          <ListItemText primary={t("Open Logs Dir")} />
+          <IconButton
+            color="inherit"
+            size="small"
+            sx={{ my: "2px" }}
+            onClick={openLogsDir}
+          >
+            <ArrowForward />
+          </IconButton>
         </ListItem>
       </List>
     </BaseDialog>

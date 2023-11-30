@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { useLockFn } from "ahooks";
 import { useTranslation } from "react-i18next";
 import { IconButton, MenuItem, Select, Typography } from "@mui/material";
-import { openAppDir, openCoreDir, openLogsDir } from "@/services/cmds";
 import { ArrowForward } from "@mui/icons-material";
 import { checkUpdate } from "@tauri-apps/api/updater";
 import { useVerge } from "@/hooks/use-verge";
@@ -71,7 +70,7 @@ const SettingVerge = ({ onError }: Props) => {
           onChange={(e) => onChangeData({ language: e })}
           onGuard={(e) => patchVerge({ language: e })}
         >
-          <Select size="small" sx={{ width: 100, "> div": { py: "7.5px" } }}>
+          <Select size="small" sx={{ width: 100, "> div": { py: "7px" } }}>
             <MenuItem value="zh">中文</MenuItem>
             <MenuItem value="en">English</MenuItem>
             <MenuItem value="ru">Русский</MenuItem>
@@ -90,7 +89,7 @@ const SettingVerge = ({ onError }: Props) => {
         </GuardState>
       </SettingItem>
 
-      {OS !== "linux" && (
+      {OS !== "linux" && OS !== "macos" && (
         <SettingItem label={t("Tray Click Event")}>
           <GuardState
             value={tray_event ?? "main_window"}
@@ -99,7 +98,7 @@ const SettingVerge = ({ onError }: Props) => {
             onChange={(e) => onChangeData({ tray_event: e })}
             onGuard={(e) => patchVerge({ tray_event: e })}
           >
-            <Select size="small" sx={{ width: 140, "> div": { py: "7.5px" } }}>
+            <Select size="small" sx={{ width: 130, "> div": { py: "7px" } }}>
               <MenuItem value="main_window">{t("Show Main Window")}</MenuItem>
               <MenuItem value="system_proxy">{t("System Proxy")}</MenuItem>
               <MenuItem value="tun_mode">{t("Tun Mode")}</MenuItem>
@@ -162,39 +161,6 @@ const SettingVerge = ({ onError }: Props) => {
           <ArrowForward />
         </IconButton>
       </SettingItem> */}
-
-      <SettingItem label={t("Open App Dir")}>
-        <IconButton
-          color="inherit"
-          size="small"
-          sx={{ my: "2px" }}
-          onClick={openAppDir}
-        >
-          <ArrowForward />
-        </IconButton>
-      </SettingItem>
-
-      <SettingItem label={t("Open Core Dir")}>
-        <IconButton
-          color="inherit"
-          size="small"
-          sx={{ my: "2px" }}
-          onClick={openCoreDir}
-        >
-          <ArrowForward />
-        </IconButton>
-      </SettingItem>
-
-      <SettingItem label={t("Open Logs Dir")}>
-        <IconButton
-          color="inherit"
-          size="small"
-          sx={{ my: "2px" }}
-          onClick={openLogsDir}
-        >
-          <ArrowForward />
-        </IconButton>
-      </SettingItem>
 
       {!(OS === "windows" && WIN_PORTABLE) && (
         <SettingItem label={t("Check for Updates")}>

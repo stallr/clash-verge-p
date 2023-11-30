@@ -89,7 +89,7 @@ const SettingClash = ({ onError }: Props) => {
           onChange={(e) => onChangeData({ "log-level": e })}
           onGuard={(e) => patchClash({ "log-level": e })}
         >
-          <Select size="small" sx={{ width: 100, "> div": { py: "7.5px" } }}>
+          <Select size="small" sx={{ width: 100, "> div": { py: "7px" } }}>
             <MenuItem value="debug">Debug</MenuItem>
             <MenuItem value="info">Info</MenuItem>
             <MenuItem value="warning">Warn</MenuItem>
@@ -104,7 +104,7 @@ const SettingClash = ({ onError }: Props) => {
           autoComplete="off"
           size="small"
           value={mixedPort ?? 0}
-          sx={{ width: 100, input: { py: "7.5px", cursor: "pointer" } }}
+          sx={{ width: 100, input: { py: "7px", cursor: "pointer" } }}
           onClick={(e) => {
             portRef.current?.open();
             (e.target as any).blur();
