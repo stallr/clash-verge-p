@@ -53,7 +53,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://ghproxy.com/https://github.com/stallr/clash-verge-p/releases/download/updater/update-proxy.json",
+        "https://mirror.ghproxy.com/https://github.com/stallr/clash-verge-p/releases/download/updater/update-proxy.json",
         "https://github.com/stallr/clash-verge-p/releases/download/updater/update.json"
       ],
       "dialog": false,
