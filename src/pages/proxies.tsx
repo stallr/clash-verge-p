@@ -28,7 +28,7 @@ const ProxyPage = () => {
     if (verge?.clash_core === "clash-meta") {
       return ["rule", "global", "direct"];
     }
-    return ["rule", "global", "direct", "script"];
+    return ["rule", "global", "direct"];
   }, [verge?.clash_core]);
 
   const curMode = clashConfig?.mode?.toLowerCase();

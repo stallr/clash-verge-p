@@ -10,7 +10,9 @@ export const LayoutItem = (props: LinkProps) => {
   const navigate = useNavigate();
 
   return (
-    <ListItem sx={{ py: 0.5, maxWidth: 250, mx: "auto" }}>
+    <ListItem
+      sx={{ py: 0.5, maxWidth: 250, mx: "auto", padding: "4px 4px 4px 8px" }}
+    >
       <ListItemButton
         selected={!!match}
         sx={[

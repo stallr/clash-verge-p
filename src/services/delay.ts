@@ -118,8 +118,8 @@ class DelayManager {
   formatDelayColor(delay: number) {
     if (delay <= 0) return "text.secondary";
     if (delay >= 10000) return "error.main";
-    if (delay > 500) return "warning.main";
-    if (delay > 100) return "text.secondary";
+    if (delay > 600) return "warning.main";
+    if (delay > 300) return "text.secondary";
     return "success.main";
   }
 }
