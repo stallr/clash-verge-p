@@ -38,7 +38,7 @@
         "frameworks": [],
         "minimumSystemVersion": "",
         "exceptionDomain": "",
-        "signingIdentity": "tom",
+        "signingIdentity": null,
         "entitlements": null
       },
       "windows": {
