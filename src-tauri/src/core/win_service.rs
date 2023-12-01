@@ -43,7 +43,7 @@ pub async fn install_service() -> Result<()> {
     let token = Token::with_current_process()?;
     let level = token.privilege_level()?;
 
-    let install_result = match level {
+    let _install_result = match level {
         PrivilegeLevel::NotPrivileged => {
             // 使用线程来避免阻塞
             std::thread::spawn(move || {
