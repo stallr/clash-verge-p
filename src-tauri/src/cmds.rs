@@ -325,13 +325,13 @@ pub mod service {
     }
 
     #[tauri::command]
-    pub async fn install_service() -> CmdResult {
-        wrap_err!(win_service::install_service().await)
+    pub fn install_service() -> CmdResult {
+        wrap_err!(win_service::install_service())
     }
 
     #[tauri::command]
-    pub async fn uninstall_service() -> CmdResult {
-        wrap_err!(win_service::uninstall_service().await)
+    pub fn uninstall_service() -> CmdResult {
+        wrap_err!(win_service::uninstall_service())
     }
 }
 
