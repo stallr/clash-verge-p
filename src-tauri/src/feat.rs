@@ -119,6 +119,8 @@ pub fn turn_tun_mode(onoroff: bool) {
     let patch_verge_async = async move {
         match patch_verge(IVerge {
             enable_tun_mode: Some(onoroff),
+            #[cfg(target_os = "windows")]
+            enable_service_mode: Some(true),
             ..IVerge::default()
         }).await {
             Ok(_) => handle::Handle::refresh_verge(),
@@ -136,12 +138,24 @@ pub fn turn_tun_mode(onoroff: bool) {
                 log::error!(target: "app", "Grant Permission Error: {err}");
                 return;
             }
+            let _ = crate::cmds::restart_sidecar().await;
         }
         patch_verge_async.await;
     });
 
     #[cfg(target_os = "windows")]
-    tauri::async_runtime::spawn(patch_verge_async);
+    tauri::async_runtime::spawn(async move {
+        use super::win_service;
+        match win_service::check_service().await {
+            Ok(code) => match code {
+                0 => _,
+                400 => _,
+                _ => win_service::install_service().await,
+            },
+            Err(_) => win_service::install_service().await,
+        }
+        patch_verge_async.await;
+    });
 }
 
 /// 修改clash的配置

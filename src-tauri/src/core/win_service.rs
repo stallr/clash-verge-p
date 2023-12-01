@@ -43,18 +43,30 @@ pub async fn install_service() -> Result<()> {
     let token = Token::with_current_process()?;
     let level = token.privilege_level()?;
 
-    let status = match level {
-        PrivilegeLevel::NotPrivileged => RunasCommand::new(install_path).show(false).status()?,
-        _ => StdCommand::new(install_path)
-            .creation_flags(0x08000000)
-            .status()?,
+    let install_result = match level {
+        PrivilegeLevel::NotPrivileged => {
+            // 使用线程来避免阻塞
+            thread::spawn(move || {
+                RunasCommand::new(install_path)
+                    .show(false)
+                    .status()
+            }).join().unwrap_or_else(|_| Err(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Failed to join thread for runas",
+            )))
+        }
+        _ => {
+            StdCommand::new(install_path)
+                .creation_flags(0x08000000)
+                .status()
+                .context("Failed to run install command with StdCommand")
+        }
     };
 
+    let status = install_result.context("Installation command failed to run")?;
+
     if !status.success() {
-        bail!(
-            "failed to install service with status {}",
-            status.code().unwrap()
-        );
+        bail!("Failed to install service with status {}", status.code().unwrap_or(-1));
     }
 
     Ok(())
@@ -72,19 +84,31 @@ pub async fn uninstall_service() -> Result<()> {
 
     let token = Token::with_current_process()?;
     let level = token.privilege_level()?;
-
-    let status = match level {
-        PrivilegeLevel::NotPrivileged => RunasCommand::new(uninstall_path).show(false).status()?,
-        _ => StdCommand::new(uninstall_path)
-            .creation_flags(0x08000000)
-            .status()?,
+    
+    let uninstall_result = match level {
+        PrivilegeLevel::NotPrivileged => {
+            // 使用线程来避免阻塞
+            thread::spawn(move || {
+                RunasCommand::new(uninstall_path)
+                    .show(false)
+                    .status()
+            }).join().unwrap_or_else(|_| Err(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Failed to join thread for runas",
+            )))
+        }
+        _ => {
+            StdCommand::new(uninstall_path)
+                .creation_flags(0x08000000)
+                .status()
+                .context("Failed to run uninstall command with StdCommand")
+        }
     };
 
+    let status = uninstall_result.context("Uninstallation command failed to run")?;
+
     if !status.success() {
-        bail!(
-            "failed to uninstall service with status {}",
-            status.code().unwrap()
-        );
+        bail!("Failed to uninstall service with status {}", status.code().unwrap_or(-1));
     }
 
     Ok(())

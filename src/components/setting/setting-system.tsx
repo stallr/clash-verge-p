@@ -1,10 +1,17 @@
 import useSWR from "swr";
 import { useRef } from "react";
+import { invoke } from "@tauri-apps/api/tauri";
 import { useTranslation } from "react-i18next";
 import { IconButton, Switch } from "@mui/material";
 import { Lock } from "@mui/icons-material";
 import { ArrowForward, PrivacyTipRounded, Settings } from "@mui/icons-material";
-import { checkService, grantPermission, restartSidecar } from "@/services/cmds";
+import {
+  checkService,
+  grantPermission,
+  installService,
+  patchVergeConfig,
+  restartSidecar,
+} from "@/services/cmds";
 import { useVerge } from "@/hooks/use-verge";
 import { useLockFn } from "ahooks";
 import { DialogRef, Notice } from "@/components/base";
@@ -57,6 +64,19 @@ const SettingSystem = ({ onError }: Props) => {
         return false;
       }
       await restartSidecar();
+    } else {
+      try {
+        const result = await invoke<any>("check_service");
+        if (result?.code === 0 || result?.code === 400) {
+          return true;
+        } else {
+          await installService();
+        }
+        await patchVergeConfig({ enable_service_mode: true });
+      } catch (err: any) {
+        Notice.error(err?.message || err.toString());
+        return false;
+      }
     }
     return true;
   };
