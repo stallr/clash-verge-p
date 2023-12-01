@@ -112,48 +112,36 @@ pub fn disable_system_proxy() {
 pub fn toggle_tun_mode() {
     let enable = Config::verge().data().enable_tun_mode.clone();
     let enable = enable.unwrap_or(false);
+    turn_tun_mode(!enable);
+}
 
+pub fn turn_tun_mode(onoroff: bool) {
+    let patch_verge_async = async move {
+        match patch_verge(IVerge {
+            enable_tun_mode: Some(onoroff),
+            ..IVerge::default()
+        }).await {
+            Ok(_) => handle::Handle::refresh_verge(),
+            Err(err) => log::error!(target: "app", "Patch Verge Error: {err}"),
+        }
+    };
+
+    #[cfg(any(target_os = "macos", target_os = "linux"))]
     tauri::async_runtime::spawn(async move {
-        match patch_verge(IVerge {
-            enable_tun_mode: Some(!enable),
-            ..IVerge::default()
-        })
-        .await
-        {
-            Ok(_) => handle::Handle::refresh_verge(),
-            Err(err) => log::error!(target: "app", "{err}"),
+        if onoroff == true {
+            use crate::core::manager::grant_permission;
+            let clash_core = Config::verge().data().clash_core.clone();
+            let clash_core: String = clash_core.unwrap_or_else(|| "clash".to_owned());
+            if let Err(err) = grant_permission(clash_core) {
+                log::error!(target: "app", "Grant Permission Error: {err}");
+                return;
+            }
         }
+        patch_verge_async.await;
     });
-}
 
-// 打开tun模式
-pub fn enable_tun_mode() {
-    tauri::async_runtime::spawn(async {
-        match patch_verge(IVerge {
-            enable_tun_mode: Some(true),
-            ..IVerge::default()
-        })
-        .await
-        {
-            Ok(_) => handle::Handle::refresh_verge(),
-            Err(err) => log::error!(target: "app", "{err}"),
-        }
-    });
-}
-
-// 关闭tun模式
-pub fn disable_tun_mode() {
-    tauri::async_runtime::spawn(async {
-        match patch_verge(IVerge {
-            enable_tun_mode: Some(false),
-            ..IVerge::default()
-        })
-        .await
-        {
-            Ok(_) => handle::Handle::refresh_verge(),
-            Err(err) => log::error!(target: "app", "{err}"),
-        }
-    });
+    #[cfg(target_os = "windows")]
+    tauri::async_runtime::spawn(patch_verge_async);
 }
 
 /// 修改clash的配置
