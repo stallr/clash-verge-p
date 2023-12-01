@@ -67,9 +67,7 @@ const SettingSystem = ({ onError }: Props) => {
     } else {
       try {
         const result = await invoke<any>("check_service");
-        if (result?.code === 0 || result?.code === 400) {
-          return true;
-        } else {
+        if (result?.code !== 0 && result?.code !== 400) {
           await installService();
         }
         await patchVergeConfig({ enable_service_mode: true });
