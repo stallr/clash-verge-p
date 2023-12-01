@@ -20,6 +20,7 @@ import { GuardState } from "./mods/guard-state";
 import { ServiceViewer } from "./mods/service-viewer";
 import { SysproxyViewer } from "./mods/sysproxy-viewer";
 import getSystem from "@/utils/get-system";
+import { E } from "@tauri-apps/api/os-076a31d4";
 
 interface Props {
   onError?: (err: Error) => void;
@@ -70,13 +71,9 @@ const SettingSystem = ({ onError }: Props) => {
         if (result?.code !== 0 && result?.code !== 400) {
           await installService();
         }
-        await patchVergeConfig({ enable_service_mode: true });
-        onChangeData({ enable_service_mode: true });
       } catch (err: any) {
         try {
           await installService();
-          await patchVergeConfig({ enable_service_mode: true });
-          onChangeData({ enable_service_mode: true });
         } catch (err: any) {
           Notice.error(err?.message || err.toString());
           return false;
@@ -130,8 +127,12 @@ const SettingSystem = ({ onError }: Props) => {
           onFormat={onSwitchFormat}
           onChange={async (e) => {
             if (e === false || (await onGuard(e))) {
-              patchVerge({ enable_tun_mode: e });
-              onChangeData({ enable_tun_mode: e });
+              const vergeOptions = isWIN
+                ? { enable_service_mode: true, enable_tun_mode: e }
+                : { enable_tun_mode: e };
+
+              patchVerge(vergeOptions);
+              onChangeData(vergeOptions);
             }
           }}
         >
