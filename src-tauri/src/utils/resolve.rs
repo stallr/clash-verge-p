@@ -61,14 +61,14 @@ pub fn create_window(app_handle: &AppHandle) {
     )
     .title("Clash Verge")
     .fullscreen(false)
-    .min_inner_size(600.0, 520.0);
+    .min_inner_size(650.0, 625.0);
 
     match Config::verge().latest().window_size_position.clone() {
         Some(size_pos) if size_pos.len() == 4 => {
             let size = (size_pos[0], size_pos[1]);
             let pos = (size_pos[2], size_pos[3]);
-            let w = size.0.clamp(590.0, f64::INFINITY);
-            let h = size.1.clamp(525.0, f64::INFINITY);
+            let w = size.0.clamp(650.0, f64::INFINITY);
+            let h = size.1.clamp(625.0, f64::INFINITY);
             builder = builder.inner_size(w, h).position(pos.0, pos.1);
         }
         _ => {
