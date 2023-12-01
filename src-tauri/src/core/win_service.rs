@@ -61,15 +61,18 @@ pub async fn install_service() -> Result<()> {
                 .status()
         }
     };
-    match crate::cmds::service::check_service().await {
-        Ok(response) => {
-            match &response.code {
-                0 | 400 => Ok(()),
-                _ => bail!("Error installing service")
-            }
-        },
-        Err(_) => bail!("Error installing service")
-    }
+    tauri::async_runtime::spawn(async move {
+        match check_service().await {
+            Ok(response) => {
+                match &response.code {
+                    0 | 400 => Ok(()),
+                    _ => bail!("Error installing service")
+                }
+            },
+            Err(_) => bail!("Error installing service")
+        }
+    });
+    Ok(())
 }
 
 /// Uninstall the Clash Verge Service
@@ -103,15 +106,18 @@ pub async fn uninstall_service() -> Result<()> {
                 .status()
         }
     };
-    match crate::cmds::service::check_service().await {
-        Ok(response) => {
-            match &response.code {
-                0 | 400 => bail!("Uninstallation command failed to run"),
-                _ => Ok(())
-            }
-        },
-        Err(_) => Ok(())
-    }
+    tauri::async_runtime::spawn(async move {
+        match check_service().await {
+            Ok(response) => {
+                match &response.code {
+                    0 | 400 => bail!("Uninstallation command failed to run"),
+                    _ => Ok(())
+                }
+            },
+            Err(_) => Ok(())
+        }
+    });
+    Ok(())
 }
 
 /// check the windows service status
