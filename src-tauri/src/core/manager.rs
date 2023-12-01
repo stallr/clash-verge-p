@@ -12,7 +12,7 @@ pub fn grant_permission(core: String) -> anyhow::Result<()> {
     log::debug!("grant_permission path: {path}");
 
     #[cfg(target_os = "macos")]
-    if !getcore_path(&path) {
+    if getcore_path(&path) {
         Ok(())
     }else{
         let output = {
