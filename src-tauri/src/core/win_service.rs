@@ -46,7 +46,7 @@ pub async fn install_service() -> Result<()> {
     let install_result = match level {
         PrivilegeLevel::NotPrivileged => {
             // 使用线程来避免阻塞
-            thread::spawn(move || {
+            std::thread::spawn(move || {
                 RunasCommand::new(install_path)
                     .show(false)
                     .status()
@@ -59,7 +59,6 @@ pub async fn install_service() -> Result<()> {
             StdCommand::new(install_path)
                 .creation_flags(0x08000000)
                 .status()
-                .context("Failed to run install command with StdCommand")
         }
     };
 
@@ -88,7 +87,7 @@ pub async fn uninstall_service() -> Result<()> {
     let uninstall_result = match level {
         PrivilegeLevel::NotPrivileged => {
             // 使用线程来避免阻塞
-            thread::spawn(move || {
+            std::thread::spawn(move || {
                 RunasCommand::new(uninstall_path)
                     .show(false)
                     .status()
@@ -101,7 +100,6 @@ pub async fn uninstall_service() -> Result<()> {
             StdCommand::new(uninstall_path)
                 .creation_flags(0x08000000)
                 .status()
-                .context("Failed to run uninstall command with StdCommand")
         }
     };
 

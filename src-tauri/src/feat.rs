@@ -145,14 +145,26 @@ pub fn turn_tun_mode(onoroff: bool) {
 
     #[cfg(target_os = "windows")]
     tauri::async_runtime::spawn(async move {
-        use super::win_service;
-        match win_service::check_service().await {
-            Ok(code) => match code {
-                0 => _,
-                400 => _,
-                _ => win_service::install_service().await,
+        match crate::cmds::service::check_service().await {
+            Ok(response) => {
+                match &response.code { // 假设 `response.code` 是 `String` 类型
+                    0 | 400 => (),
+                    _ => {
+                        if let Err(e) = crate::cmds::service::install_service().await {
+                            // 处理错误，比如记录日志
+                            log::error!("Error installing service: {}", e);
+                            return;
+                        }
+                    }
+                }
             },
-            Err(_) => win_service::install_service().await,
+            Err(_) => {
+                if let Err(e) = crate::cmds::service::install_service().await {
+                    // 处理错误，比如记录日志
+                    log::error!("Error installing service: {}", e);
+                    return;
+                }
+            }
         }
         patch_verge_async.await;
     });
