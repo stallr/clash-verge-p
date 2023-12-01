@@ -71,10 +71,12 @@ const SettingSystem = ({ onError }: Props) => {
           await installService();
         }
         await patchVergeConfig({ enable_service_mode: true });
+        onChangeData({ enable_service_mode: true });
       } catch (err: any) {
         try {
           await installService();
           await patchVergeConfig({ enable_service_mode: true });
+          onChangeData({ enable_service_mode: true });
         } catch (err: any) {
           Notice.error(err?.message || err.toString());
           return false;

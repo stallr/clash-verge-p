@@ -147,11 +147,10 @@ pub fn turn_tun_mode(onoroff: bool) {
     tauri::async_runtime::spawn(async move {
         match crate::cmds::service::check_service().await {
             Ok(response) => {
-                match &response.code { // 假设 `response.code` 是 `String` 类型
+                match &response.code {
                     0 | 400 => (),
                     _ => {
                         if let Err(e) = crate::cmds::service::install_service().await {
-                            // 处理错误，比如记录日志
                             log::error!("Error installing service: {}", e);
                             return;
                         }
@@ -160,7 +159,6 @@ pub fn turn_tun_mode(onoroff: bool) {
             },
             Err(_) => {
                 if let Err(e) = crate::cmds::service::install_service().await {
-                    // 处理错误，比如记录日志
                     log::error!("Error installing service: {}", e);
                     return;
                 }

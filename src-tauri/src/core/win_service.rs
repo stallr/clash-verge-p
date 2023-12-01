@@ -43,7 +43,7 @@ pub async fn install_service() -> Result<()> {
     let token = Token::with_current_process()?;
     let level = token.privilege_level()?;
 
-    let install_result = match level {
+    let _install_result = match level {
         PrivilegeLevel::NotPrivileged => {
             // 使用线程来避免阻塞
             std::thread::spawn(move || {
@@ -61,13 +61,17 @@ pub async fn install_service() -> Result<()> {
                 .status()
         }
     };
-
-    let status = install_result.context("Installation command failed to run")?;
-
-    if !status.success() {
-        bail!("Failed to install service with status {}", status.code().unwrap_or(-1));
-    }
-
+    tauri::async_runtime::spawn(async move {
+        match check_service().await {
+            Ok(response) => {
+                match &response.code {
+                    0 | 400 => Ok(()),
+                    _ => bail!("Error installing service")
+                }
+            },
+            Err(_) => bail!("Error installing service")
+        }
+    });
     Ok(())
 }
 
@@ -84,7 +88,7 @@ pub async fn uninstall_service() -> Result<()> {
     let token = Token::with_current_process()?;
     let level = token.privilege_level()?;
     
-    let uninstall_result = match level {
+    let _uninstall_result = match level {
         PrivilegeLevel::NotPrivileged => {
             // 使用线程来避免阻塞
             std::thread::spawn(move || {
@@ -102,13 +106,17 @@ pub async fn uninstall_service() -> Result<()> {
                 .status()
         }
     };
-
-    let status = uninstall_result.context("Uninstallation command failed to run")?;
-
-    if !status.success() {
-        bail!("Failed to uninstall service with status {}", status.code().unwrap_or(-1));
-    }
-
+    tauri::async_runtime::spawn(async move {
+        match check_service().await {
+            Ok(response) => {
+                match &response.code {
+                    0 | 400 => bail!("Uninstallation command failed to run"),
+                    _ => Ok(())
+                }
+            },
+            Err(_) => Ok(())
+        }
+    });
     Ok(())
 }
 
